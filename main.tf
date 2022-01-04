@@ -15,9 +15,10 @@ module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = ">=2.77.0"
 
-  name                 = "education"
+  name                 = "education_vpc"
   cidr                 = "10.0.0.0/16"
   azs                  = data.aws_availability_zones.available.names
+  private_subnets      = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
   public_subnets       = ["10.0.4.0/24", "10.0.5.0/24", "10.0.6.0/24"]
   enable_dns_hostnames = true
   enable_dns_support   = true
@@ -33,7 +34,7 @@ resource "aws_db_subnet_group" "education" {
 }
 
 resource "aws_security_group" "rds" {
-  name   = "education_rds"
+  name   = "education_rds_security_group"
   vpc_id = module.vpc.vpc_id
 
   ingress {
@@ -51,12 +52,12 @@ resource "aws_security_group" "rds" {
   }
 
   tags = {
-    Name = "education_rds"
+    Name = "education_rds_security_group"
   }
 }
 
 resource "aws_db_parameter_group" "education" {
-  name   = "education"
+  name   = "education_db_parameter_group"
   family = "postgres12"
 
   parameter {
@@ -70,7 +71,7 @@ resource "aws_db_parameter_group" "education" {
   }
 
   tags = {
-    Name = "education_parameter_group"
+    Name = "education_db_parameter_group"
   }
 }
 

@@ -57,7 +57,7 @@ resource "aws_security_group" "rds" {
 }
 
 resource "aws_db_parameter_group" "education" {
-  name   = "education_db_parameter_group"
+  name   = "education-db-parameter-group"
   family = "postgres12"
 
   parameter {

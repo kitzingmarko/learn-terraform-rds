@@ -12,7 +12,7 @@ provider "aws" {
 data "aws_availability_zones" "available" {}
 
 module "vpc" {
-  source  = "terraform-aws-modules/vpc/aws"
+  source  = "registry.terraform.io/terraform-aws-modules/vpc/aws"
   version = ">=2.77.0"
 
   name                 = "education_vpc"
@@ -34,7 +34,7 @@ resource "aws_db_subnet_group" "education" {
 }
 
 resource "aws_security_group" "rds" {
-  name   = "education_rds_security_group"
+  name   = "education_rds"
   vpc_id = module.vpc.vpc_id
 
   ingress {
@@ -57,7 +57,7 @@ resource "aws_security_group" "rds" {
 }
 
 resource "aws_db_parameter_group" "education" {
-  name   = "education-db-parameter-group"
+  name   = "education"
   family = "postgres12"
 
   parameter {

@@ -27,6 +27,7 @@ module "vpc" {
 resource "aws_db_subnet_group" "education" {
   name       = "education_subnet_group"
   subnet_ids = module.vpc.public_subnets
+  description = "Security group for ${aws_db_instance.education.name}"
 
   tags = {
     Name = "education_subnet_group"
